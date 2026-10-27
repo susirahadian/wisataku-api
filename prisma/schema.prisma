@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Destinasi {
+  id         Int         @id @default(autoincrement())
+  nama       String
+  kategori   String
+  hargaTiket Int
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  ulasan    Ulasan[]
+  fasilitas Fasilitas[]
+}
+
+model Ulasan {
+  id          Int      @id @default(autoincrement())
+  destinasiId Int
+  rating      Int
+  komentar    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  destinasi   Destinasi @relation(fields: [destinasiId], references: [id], onDelete: Cascade)
+
+  @@index([destinasiId])
+}
+
+model Fasilitas {
+  id            Int      @id @default(autoincrement())
+  destinasiId   Int
+  namaFasilitas String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  destinasi     Destinasi @relation(fields: [destinasiId], references: [id], onDelete: Cascade)
+
+  @@index([destinasiId])
+}
+
+model User {
+  id           Int    @id @default(autoincrement())
+  nama         String
+  email        String @unique
+  passwordHash String
+  role         String @default("wisatawan") // "wisatawan" atau "admin"
+}

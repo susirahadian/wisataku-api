@@ -1,0 +1,49 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DestinasiModel {
+  createdAt: DateTime!
+  fasilitas: [FasilitasModel!]!
+  hargaTiket: Int!
+  id: Int!
+  kategori: String!
+  nama: String!
+  ratingRata: Float!
+  ulasan: [UlasanModel!]!
+  updatedAt: DateTime!
+}
+
+type FasilitasModel {
+  id: Int!
+  namaFasilitas: String!
+}
+
+type Mutation {
+  createDestinasi(hargaTiket: Int!, kategori: String!, nama: String!): DestinasiModel!
+  tambahUlasan(input: TambahUlasanInput!): UlasanModel!
+}
+
+type Query {
+  destinasi(id: Int!): DestinasiModel!
+  destinasiList: [DestinasiModel!]!
+}
+
+input TambahUlasanInput {
+  destinasiId: Int!
+  komentar: String!
+  rating: Int!
+}
+
+type UlasanModel {
+  createdAt: DateTime!
+  id: Int!
+  komentar: String!
+  rating: Int!
+  updatedAt: DateTime!
+}
